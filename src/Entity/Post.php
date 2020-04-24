@@ -66,6 +66,27 @@ class Post
     private $thumbnailFile;
 
     /**
+     * @ORM\Column(type="string")
+     *
+     * @var string|null
+     */
+    private $thumbnail;
+
+    /**
+     * @var
+     * @ORM\OneToMany(targetEntity="App\Entity\Attachment", mappedBy="post", cascade={"persist"})
+     */
+    private $attachments;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+        $this->attachments = new ArrayCollection();
+    }
+
+    /**
      * @return File|null
      */
     public function getThumbnailFile(): ?File
@@ -83,20 +104,6 @@ class Post
         if($thumbnailFile){
             $this->updatedAt = new \DateTime();
         }
-    }
-
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string|null
-     */
-    private $thumbnail;
-
-    public function __construct()
-    {
-        $this->tags = new ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -216,6 +223,37 @@ class Post
     public function setThumbnail(?string $thumbnail): self
     {
         $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Attachment[]
+     */
+    public function getAttachments(): Collection
+    {
+        return $this->attachments;
+    }
+
+    public function addAttachment(Attachment $attachment): self
+    {
+        if (!$this->attachments->contains($attachment)) {
+            $this->attachments[] = $attachment;
+            $attachment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttachment(Attachment $attachment): self
+    {
+        if ($this->attachments->contains($attachment)) {
+            $this->attachments->removeElement($attachment);
+            // set the owning side to null (unless already changed)
+            if ($attachment->getPost() === $this) {
+                $attachment->setPost(null);
+            }
+        }
 
         return $this;
     }
