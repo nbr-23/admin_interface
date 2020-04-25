@@ -1,11 +1,6 @@
 easy_admin:
     site_name: 'Admin Interface'
     design:
-        assets:
-            css:
-                - '/assets/bs-tags/bootstrap-tagsinput.css'
-            js:
-                - '/assets/bs-tags/bootstrap-tagsinput.js'
         menu:
             - {label: "Entities"}
             - label: "Posts"
@@ -21,7 +16,7 @@ easy_admin:
                   - {entity: Tag, label: "List of tags", icon: "th-list"}
                   - {entity: Tag, label: "Add tag", icon: "plus", params: {action: 'new'}}
             - {label: "Settings"}
-            - {entity: User, icon: "user"}
+            - {entity: User, icon: "user", permission: ['ROLE_ADMIN']}
     entities:
         Post:
             class: App\Entity\Post
@@ -35,7 +30,7 @@ easy_admin:
                     - published
                     - {type: 'group', icon: 'th-list', label: 'Other Information', css_class: 'col-lg-12'}
                     - category
-                    - {property: 'tags', type_options: {attr: {data-role: 'tagsinput'}}}
+                    - tags
                     - {type: 'group', icon: 'th-list', label: 'Other Information', css_class: 'col-lg-12'}
                     - {property: 'thumbnailFile', type: 'vich_image'}
                     - {property: 'attachments', type: 'collection', type_options: {entry_type: 'App\Form\AttachmentType', by_reference: false}}
@@ -71,6 +66,7 @@ easy_admin:
                     - slug
         User:
             class: App\Entity\User
+            item_permission: 'ROLE_ADMIN'
 
         # List the entity class name you want to manage
 
