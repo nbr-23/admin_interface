@@ -2,6 +2,7 @@ easy_admin:
     site_name: 'Admin Interface'
     design:
         menu:
+            - { label: "CODE ON GITHUB", icon: "cog", url: "https://github.com/nbr-23/admin_interface", target: "_blank"}
             - {label: "Entities"}
             - label: "Posts"
               children:
