@@ -19,6 +19,7 @@ easy_admin:
             - {entity: User, icon: "user", permission: ['ROLE_ADMIN']}
     entities:
         Post:
+            controller: App\Controller\PostController
             class: App\Entity\Post
             label: "Post"
             form:
@@ -44,7 +45,9 @@ easy_admin:
                     - content
                     - createdAt
                     - tags
+                    - category
                     - {property: 'thumbnail', type: 'image', base_path: '%uploads_path%'}
+
             show:
                 fields:
                     - title
@@ -56,8 +59,14 @@ easy_admin:
                     - {property: 'attachments', template: 'images.html.twig'}
             edit:
                 help: Edit fields
+
         Category:
             class: App\Entity\Category
+            list:
+                fields:
+                    - title
+                    - slug
+                    - posts
         Tag:
             class: App\Entity\Tag
             form:
@@ -67,7 +76,10 @@ easy_admin:
         User:
             class: App\Entity\User
             item_permission: 'ROLE_ADMIN'
-
+            list:
+                fields:
+                    - email
+                    - roles
         # List the entity class name you want to manage
 
 

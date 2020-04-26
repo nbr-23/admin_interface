@@ -47,7 +47,7 @@ class Post
     private $tags;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="posts", cascade={"persist"})
      */
     private $category;
 
